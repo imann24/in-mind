@@ -40,8 +40,8 @@ export default function Create() {
                       type="text"
                     />
                     <Button
+                      colorScheme="lightRed"
                       type="button"
-                      colorScheme="red"
                       size="sm"
                       onClick={() => arrayHelpers.remove(index)}
                     >
@@ -52,7 +52,7 @@ export default function Create() {
                 <Button
                   type="button"
                   size="sm"
-                  colorScheme="teal"
+                  colorScheme="lightGreen"
                   className="mb-2 mr-1 float-right"
                   onClick={() => arrayHelpers.insert(arrayHelpers.form.values.values.length, '')}
                 >
@@ -61,7 +61,7 @@ export default function Create() {
               </div>
             )}
           ></FieldArray>
-          <Button type="submit" colorScheme="teal">Submit</Button>
+          <Button type="submit" colorScheme="lightGreen">Submit</Button>
         </Form>
       </Formik>
     </div>
