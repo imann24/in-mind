@@ -1,5 +1,6 @@
 'use client'
 
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { Formik, Form, Field, FieldArray } from 'formik'
 import { Button } from '@chakra-ui/react'
 
@@ -7,7 +8,7 @@ type CoreValuesSubmission = {
   values: string[],
 }
 
-export default function Create() {
+export default withPageAuthRequired(function Create() {
   async function handleSubmit(input: CoreValuesSubmission) {
     // TODO: Send the input to the server
     console.log(input.values)
@@ -66,4 +67,4 @@ export default function Create() {
       </Formik>
     </div>
   )
-}
+})
