@@ -1,15 +1,26 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import { Formik, Form, Field, FieldArray } from 'formik'
-import { Button } from '@chakra-ui/react'
-
-type CoreValuesSubmission = {
-  values: string[],
-}
+import { Spinner, Button } from '@chakra-ui/react'
+import { CoreValues } from '@/types'
 
 export default withPageAuthRequired(function Create() {
-  async function handleSubmit(input: CoreValuesSubmission) {
+  const [ coreValues, setCoreValues ] = useState<CoreValues | null>(null)
+  useEffect(() => {
+    fetch('/api/supabase/values')
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.values.length > 0) {
+          setCoreValues({ values: data.values })
+        } else {
+          setCoreValues({ values: ['', '', ''] })
+        }
+      })
+  }, [])
+
+  async function handleSubmit(input: CoreValues) {
     const body = {
       values: input.values,
     }
@@ -21,18 +32,25 @@ export default withPageAuthRequired(function Create() {
       body: JSON.stringify(body)
     })
   }
+  if (!coreValues) {
+    return (
+      <div className="flex flex-col items-center">
+        <Spinner
+          thickness='4px'
+          speed='0.65s'
+          emptyColor='gray.200'
+          color='blue.500'
+          size='xl'
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col items-center">
       <h1>What are your core values?</h1>
       <Formik
-        initialValues={{
-          values: [
-            '',
-            '',
-            '',
-          ]
-        }}
+        initialValues={coreValues}
         onSubmit={handleSubmit}
       >
         <Form>
@@ -70,7 +88,7 @@ export default withPageAuthRequired(function Create() {
               </div>
             )}
           ></FieldArray>
-          <Button type="submit" colorScheme="lightGreen">Submit</Button>
+          <Button type="submit" colorScheme="lightGreen">Save</Button>
         </Form>
       </Formik>
     </div>
