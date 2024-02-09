@@ -10,8 +10,16 @@ type CoreValuesSubmission = {
 
 export default withPageAuthRequired(function Create() {
   async function handleSubmit(input: CoreValuesSubmission) {
-    // TODO: Send the input to the server
-    console.log(input.values)
+    const body = {
+      values: input.values,
+    }
+    await fetch('/api/supabase/values', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
   }
 
   return (
