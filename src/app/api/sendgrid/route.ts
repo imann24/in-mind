@@ -3,7 +3,7 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
 export const dynamic = 'force-dynamic'
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   if (!process.env.SENDGRID_API_KEY ||
       !process.env.SENDGRID_FROM_EMAIL ||
       !process.env.SENDGRID_TEMPLATE_ID) {
