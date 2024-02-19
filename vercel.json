@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/sendgrid",
+      "schedule": "0 16 * * *"
+    }
+  ]
+}
